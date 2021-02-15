@@ -37,15 +37,15 @@ def make_ephemeris():
                 if (body in ['STA', 'STB']) & (time < stereo_begin):
                     continue
 
-                coords[i, :] = spice.get_lonlat(time, body, system, degrees=False)
+                coords[i, :] = spice.get_lonlat(time, body, system, degrees=True)
 
             coord_group.create_dataset('time', data=times.jd)
             rad = coord_group.create_dataset('radius', data=coords[:, 0])
             rad.attrs['unit'] = u.km.to_string()
             lon = coord_group.create_dataset('longitude', data=coords[:, 1])
-            lon.attrs['unit'] = u.rad.to_string()
+            lon.attrs['unit'] = u.deg.to_string()
             lat = coord_group.create_dataset('latitude', data=coords[:, 2])
-            lat.attrs['unit'] = u.rad.to_string()
+            lat.attrs['unit'] = u.deg.to_string()
 
             ephem.flush()
 
